@@ -30,4 +30,21 @@ describe('Dealivrd app', () => {
 
     expect(screen.getByText('Enter a 5-digit ZIP code.')).toBeInTheDocument();
   });
+
+  it('keeps all navigation targets available when search has no results', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.clear(screen.getByLabelText(/ZIP code/i));
+    await user.type(screen.getByLabelText(/ZIP code/i), '00000');
+    await user.click(screen.getByRole('button', { name: /Search/i }));
+    await screen.findByText(/No verified public-source fixture deals/);
+    for (const name of ['Rankings', 'Sources', 'Method']) {
+      const link = screen.getByRole('link', { name });
+      const target = document.querySelector(link.getAttribute('href')!);
+      expect(target).not.toBeNull();
+      expect(document.querySelectorAll(link.getAttribute('href')!)).toHaveLength(1);
+    }
+    expect(screen.getByText('Deal scores')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'How deal scores work' })).toBeInTheDocument();
+  });
 });

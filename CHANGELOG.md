@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Give Rankings, Sources, and Method permanent navigation targets, including empty searches.
+- Rename Bars to Deal scores and show scores out of 100 rather than percentages.
+- Explain scoring assumptions and list source coverage independently of the selected deal.
+- Prevent mobile search content from expanding beyond its grid column.
+
 ## 0.1.0 - 2026-09-28
 
 - Publish the initial Dealivrd prototype as a labeled sample-data GitHub Pages demo.

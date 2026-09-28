@@ -146,7 +146,7 @@ export default function App() {
         </form>
       </section>
 
-      <section className="workspace" id="rankings">
+      <section className="workspace">
         <aside className="filter-rail" aria-label="Filters">
           <div className="rail-heading">
             <Filter size={18} />
@@ -227,7 +227,7 @@ export default function App() {
           </label>
         </aside>
 
-        <section className="rank-board">
+        <section className="rank-board" id="rankings" tabIndex={-1} aria-label="Deal rankings">
           <div className="board-toolbar">
             <div className="segments" role="tablist" aria-label="Offer type">
               {tabs.map((tab) => (
@@ -264,7 +264,7 @@ export default function App() {
           <div className="metric-header">
             <span>Ranked deal</span>
             <span>{metricLabel(filters.sort)}</span>
-            <span>Bars</span>
+            <span>Deal scores</span>
             <span>Confidence</span>
           </div>
 
@@ -286,8 +286,8 @@ export default function App() {
                       {deal.vehicle.trim} / {titleCase(deal.vehicle.bodyStyle)} / {titleCase(deal.vehicle.fuelType)}
                     </small>
                   </span>
-                  <span className="primary-metric">{deal.score[filters.sort]}%</span>
-                  <span className="bar-stack" aria-label={`Score bars for ${deal.vehicle.make} ${deal.vehicle.model}`}>
+                  <span className="primary-metric">{deal.score[filters.sort]}/100</span>
+                  <span className="bar-stack" aria-label={`Deal scores for ${deal.vehicle.make} ${deal.vehicle.model}`}>
                     <MetricBar label="Monthly" value={deal.score.monthlyCost} color="emerald" />
                     <MetricBar label="Rebate" value={deal.score.totalRebates} color="blue" />
                     <MetricBar label="APR" value={deal.score.aprValue} color="amber" />
@@ -306,6 +306,33 @@ export default function App() {
         </section>
 
         <DealDetail deal={selectedDeal} sources={sources} />
+      </section>
+
+      <section className="information-section" id="sources" tabIndex={-1} aria-labelledby="sources-heading">
+        <h2 id="sources-heading">Sources and coverage</h2>
+        <p>Offers in this demo are illustrative samples. Source links identify the public pages intended for verification; they do not establish that these offers are available today.</p>
+        <ul className="source-list">
+          {sources.map((source) => (
+            <li key={source.id}>
+              <a href={source.url} target="_blank" rel="noreferrer">{source.name} <ExternalLink size={14} /></a>
+              <span>{titleCase(source.status)}</span>
+              <p>{source.coverage}</p>
+            </li>
+          ))}
+        </ul>
+        <p>Missing coverage means not verified. It does not mean no deal exists.</p>
+      </section>
+
+      <section className="information-section" id="method" tabIndex={-1} aria-labelledby="method-heading">
+        <h2 id="method-heading">How deal scores work</h2>
+        <p>Each deal receives scores from 0 to 100. Higher scores mean stronger value under the demo's assumptions; they are not savings percentages or approval odds.</p>
+        <dl className="method-list">
+          <div><dt>Monthly</dt><dd>Estimated monthly affordability, using the effective lease payment when available. Lower payments score higher.</dd></div>
+          <div><dt>Rebate</dt><dd>Sample cash incentive value relative to a $7,500 reference amount.</dd></div>
+          <div><dt>APR</dt><dd>Lower advertised financing rates score higher. An unverified rate receives a default score, not a verified financing quote.</dd></div>
+          <div><dt>Best overall</dt><dd>Monthly affordability 30%, rebates 18%, APR value 18%, lease value 16%, freshness 10%, and confidence 8%.</dd></div>
+        </dl>
+        <p>Finance estimates use MSRP minus the sample rebate, with the stated APR and term. Missing APR is treated as zero in this prototype's estimate. Lease estimates add due-at-signing divided by the lease term to the advertised monthly payment. Taxes, fees, eligibility, and whether incentives can be combined still need verification.</p>
       </section>
     </main>
   );
@@ -385,7 +412,7 @@ function DealDetail({ deal, sources }: { deal?: DealResult; sources: SourceStatu
         </dl>
       </section>
 
-      <section className="source-box" id="sources">
+      <section className="source-box">
         <h3>Public source</h3>
         <p>{source?.coverage ?? 'Fixture source coverage is not verified.'}</p>
         <a href={deal.offer.sourceUrl} target="_blank" rel="noreferrer">
