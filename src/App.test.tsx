@@ -17,6 +17,8 @@ describe('Dealivrd app', () => {
     expect(screen.getByText('Dealivrd')).toBeInTheDocument();
     await waitFor(() => expect(screen.getByText(/Missing public data/i)).toBeInTheDocument());
     expect(screen.getByRole('button', { name: /2026 Toyota Camry/i })).toBeInTheDocument();
+    expect(screen.getAllByText(/Last checked Sep 28, 2026/)).toHaveLength(6);
+    expect(screen.getByText(/Offer page checked Sep 28, 2026/)).toBeInTheDocument();
   });
 
   it('validates ZIP input before updating search filters', async () => {

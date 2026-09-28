@@ -52,7 +52,7 @@ export async function searchDeals(filters: SearchFilters): Promise<SearchRespons
     return {
       deals: sortDeals(deals, filters.sort),
       coverageNotice: import.meta.env.MODE === 'pages'
-        ? 'Demo: illustrative sample offers only. These are not current verified incentives. Missing data is not verified.'
+        ? 'Static snapshot of public offers checked Sep 28, 2026 for ZIP 19104. Confirm current eligibility and availability with the dealer. Missing data is not verified.'
         : 'Showing local fixture data because the API server is unavailable. Missing data is still not verified.',
     };
   }

@@ -588,6 +588,7 @@ a {
 .source-list li { padding: 14px 0; border-bottom: 1px solid #dce3ea; }
 .source-list a { display: inline-flex; align-items: center; gap: 6px; }
 .source-list span { display: block; margin-top: 6px; color: #475569; }
+.source-list .source-checked { margin-top: 3px; color: #64748b; font-size: 0.875rem; }
 .method-list dt { font-weight: 700; }
 .method-list dd { margin: 6px 0 18px; line-height: 1.6; }
 .search-band > *, .workspace > * { min-width: 0; }

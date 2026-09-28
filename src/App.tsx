@@ -111,7 +111,7 @@ export default function App() {
         </nav>
         <div className="trust-strip">
           <ShieldCheck size={17} />
-          {import.meta.env.MODE === 'pages' ? 'Demo: sample offers, not current verified deals' : 'Server-side public-source adapters'}
+          {import.meta.env.MODE === 'pages' ? 'Public offer snapshot checked Sep 28, 2026' : 'Server-side public-source adapters'}
         </div>
       </header>
 
@@ -310,12 +310,13 @@ export default function App() {
 
       <section className="information-section" id="sources" tabIndex={-1} aria-labelledby="sources-heading">
         <h2 id="sources-heading">Sources and coverage</h2>
-        <p>Offers in this demo are illustrative samples. Source links identify the public pages intended for verification; they do not establish that these offers are available today.</p>
+        <p>Offer terms below were found on public pages checked Sep 28, 2026 for ZIP 19104 and its region. This is a static snapshot, not live inventory or a personalized quote. Catalog MSRP values have not been rechecked, so estimated payments are directional; confirm eligibility, availability, fees, and terms with the dealer.</p>
         <ul className="source-list">
           {sources.map((source) => (
             <li key={source.id}>
               <a href={source.url} target="_blank" rel="noreferrer">{source.name} <ExternalLink size={14} /></a>
               <span>{titleCase(source.status)}</span>
+              <span className="source-checked">Last checked {formatDate(source.lastChecked)}</span>
               <p>{source.coverage}</p>
             </li>
           ))}
@@ -328,11 +329,11 @@ export default function App() {
         <p>Each deal receives scores from 0 to 100. Higher scores mean stronger value under the demo's assumptions; they are not savings percentages or approval odds.</p>
         <dl className="method-list">
           <div><dt>Monthly</dt><dd>Estimated monthly affordability, using the effective lease payment when available. Lower payments score higher.</dd></div>
-          <div><dt>Rebate</dt><dd>Sample cash incentive value relative to a $7,500 reference amount.</dd></div>
+          <div><dt>Rebate</dt><dd>Verified cash incentive value, when available, relative to a $7,500 reference amount.</dd></div>
           <div><dt>APR</dt><dd>Lower advertised financing rates score higher. An unverified rate receives a default score, not a verified financing quote.</dd></div>
           <div><dt>Best overall</dt><dd>Monthly affordability 30%, rebates 18%, APR value 18%, lease value 16%, freshness 10%, and confidence 8%.</dd></div>
         </dl>
-        <p>Finance estimates use MSRP minus the sample rebate, with the stated APR and term. Missing APR is treated as zero in this prototype's estimate. Lease estimates add due-at-signing divided by the lease term to the advertised monthly payment. Taxes, fees, eligibility, and whether incentives can be combined still need verification.</p>
+        <p>Finance estimates use catalog MSRP minus any listed cash incentive, with the stated APR and term. Missing APR is treated as zero in this prototype's estimate. Lease estimates add due-at-signing divided by the lease term to the advertised monthly payment. Catalog MSRP, taxes, fees, eligibility, and whether incentives can be combined still need verification.</p>
       </section>
     </main>
   );
@@ -418,10 +419,18 @@ function DealDetail({ deal, sources }: { deal?: DealResult; sources: SourceStatu
         <a href={deal.offer.sourceUrl} target="_blank" rel="noreferrer">
           Open source <ExternalLink size={14} />
         </a>
-        <span>Fetched {new Date(deal.offer.fetchedAt).toLocaleString()}</span>
+        <span>Offer page checked {formatDate(deal.offer.fetchedAt)}</span>
       </section>
     </aside>
   );
+}
+
+function formatDate(value: string) {
+  return new Date(`${value.slice(0, 10)}T12:00:00`).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
 }
 
 function MetricTile({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
