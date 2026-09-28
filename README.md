@@ -28,9 +28,15 @@ The dev command starts both the API and Vite:
 
 ## GitHub Pages Demo
 
-The Pages build is a static sample-data demo, not a live incentive service.
-GitHub Pages cannot run the Express API. The demo labels offers as illustrative
-and skips API requests. Sample offers may be expired and are not shopping quotes.
+The Pages build is a static public-offer snapshot, not a live incentive service.
+The current snapshot is for ZIP 19104 and was checked September 28, 2026. It
+contains publicly listed Toyota and Hyundai finance/lease terms; offers are
+subject to eligibility, dealer participation, inventory, and local confirmation.
+Unitemized total-savings promotions and conditional rebates are not scored as
+guaranteed cash. Catalog MSRP values have not been rechecked, so estimated
+payments are directional. Ford terms could not be verified from its public page
+and are not included. GitHub Pages cannot run the Express API, so it skips API
+requests.
 
 Build it with `npm run build -- --mode pages --base /dealivrd/`.
 The workflow in `.github/workflows/pages.yml` verifies pull requests and deploys
