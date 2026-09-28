@@ -576,6 +576,22 @@ a {
   color: #111827;
 }
 
+.information-section {
+  padding: 28px 0;
+  border-top: 1px solid #dce3ea;
+  scroll-margin-top: 20px;
+}
+
+#rankings { scroll-margin-top: 20px; }
+.information-section p { max-width: 85ch; line-height: 1.6; }
+.source-list { list-style: none; padding: 0; }
+.source-list li { padding: 14px 0; border-bottom: 1px solid #dce3ea; }
+.source-list a { display: inline-flex; align-items: center; gap: 6px; }
+.source-list span { display: block; margin-top: 6px; color: #475569; }
+.method-list dt { font-weight: 700; }
+.method-list dd { margin: 6px 0 18px; line-height: 1.6; }
+.search-band > *, .workspace > * { min-width: 0; }
+
 @media (max-width: 1180px) {
   .workspace {
     grid-template-columns: 230px minmax(0, 1fr);
